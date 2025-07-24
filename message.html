@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ladies Retreat 2025 - Speakers</title>
+  <title>Recordings</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Lato&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -237,6 +237,12 @@
   const timeSelect = document.getElementById("time-select");
   const speakerSelect = document.getElementById("speaker-select");
 
+  // Pause and reset all audio
+  document.querySelectorAll('audio').forEach(audio => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
+
   timeSelect.innerHTML = '<option value="">Select Time</option>';
   speakerSelect.innerHTML = '<option value="">Select Speaker</option>';
   hideAllSpeakers();
@@ -251,10 +257,17 @@
   }
 }
 
+
 function updateSpeakers() {
   const day = document.getElementById("day-select").value;
   const timeOfDay = document.getElementById("time-select").value;
   const speakerSelect = document.getElementById("speaker-select");
+
+  // Pause and reset all audio
+  document.querySelectorAll('audio').forEach(audio => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
 
   speakerSelect.innerHTML = '<option value="">Select Speaker</option>';
   hideAllSpeakers();
@@ -271,12 +284,25 @@ function updateSpeakers() {
 
 function showSpeaker() {
   const selected = document.getElementById("speaker-select").value;
+
+  // Pause and reset all audio elements
+  document.querySelectorAll('audio').forEach(audio => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
+
   hideAllSpeakers();
+
   if (selected) {
     const el = document.getElementById(selected);
-    if (el) el.classList.add("active");
+    if (el) {
+      el.classList.add("active");
+      // Do NOT auto-play the audio
+    }
   }
 }
+
+
 
 function hideAllSpeakers() {
   document.querySelectorAll('.speaker-info').forEach(el => el.classList.remove("active"));

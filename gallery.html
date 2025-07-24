@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fancy Categorized Gallery</title>
+  <title> Gallery</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
 
@@ -43,8 +43,8 @@
       align-items: center;
       font-weight: 700;
       font-size: 1.5rem;
-      color: #cda7f2;
-      /* pastel lilac */
+      /*color: #e6d6f7;
+       pastel lilac */
       letter-spacing: 2px;
       cursor: pointer;
       user-select: none;
@@ -53,7 +53,7 @@
     .logo img {
       height: 40px;
       margin-right: 10px;
-      filter: hue-rotate(250deg) saturate(150%);
+      /*filter: hue-rotate(250deg) saturate(150%);*/
     }
 
     .nav-links {
@@ -280,7 +280,6 @@
 
   <nav>
     <div class="logo">
-      <!-- Replace with your logo image if you want -->
       <img src="img/logo.png" alt="Logo" />
       Ladies Retreat 2025
     </div>
@@ -311,21 +310,17 @@
     <div class="gallery" id="gallery">
 
       <!-- Fun -->
-      <div class="gallery-item" data-category="fun" data-type="video" data-src="video/intro.mp4"
+      <div class="gallery-item" data-category="fun" data-type="image" data-src="groups/group1.jpg"
         data-caption="preaching">
-        <img src="fun/walk2.jpg" alt="walk2" />
-        <svg class="play-icon" viewBox="0 0 64 64" fill="#cda7f2" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="30" fill="rgba(0,0,0,0.4)" />
-          <polygon points="26,20 46,32 26,44" />
-        </svg>
-        <div class="caption">Nature walk</div>
+        <img src="groups/group1.jpg" alt="walk2" />
+        <div class="caption"></div>
       </div>
 
 
-      <div class="gallery-item" data-category="fun" data-type="image" data-src="img/sunset.jpg"
-        data-caption="Sunset Fun">
-        <img src="fun/walk3.jpg" alt="walk" />
-        <div class="caption">group photo</div>
+      <div class="gallery-item" data-category="fun" data-type="image" data-src="fun/walk2.jpg"
+        data-caption="Nature walk">
+        <img src="fun/walk2.jpg" alt="Nature walk" />
+        <div class="caption"></div>
       </div>
 
 
@@ -340,8 +335,8 @@
       </div>
 
       <div class="gallery-item" data-category="fun" data-type="video" data-src="fun/exercise2.mp4"
-        data-caption="Flower Fun Video">
-        <img src="fun/exercise2.png" alt="Flower Fun Video" />
+        data-caption="Fun Video">
+        <img src="fun/exercise2.png" alt="Fun Video" />
         <svg class="play-icon" viewBox="0 0 64 64" fill="#cda7f2" xmlns="http://www.w3.org/2000/svg">
           <circle cx="32" cy="32" r="30" fill="rgba(0,0,0,0.4)" />
           <polygon points="26,20 46,32 26,44" />
@@ -352,14 +347,14 @@
 
       <!-- Praise -->
       <div class="gallery-item" data-category="praise" data-type="image"
-        data-src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
-        data-caption="City Praise">
-        <img src="praise/praise1.jpg" alt="City Praise" />
-        <div class="caption">Praise</div>
+        data-src="praise/praise1.jpg"
+        data-caption="Praise">
+        <img src="praise/praise1.jpg" alt="Praise" />
+        <div class="caption"></div>
       </div>
       <div class="gallery-item" data-category="praise" data-type="video" data-src="praise/praisevid.mp4"
         data-caption="Kigoco">
-        <img src="groups/group1.jpg" alt="Kigoco" />
+        <img src="praise/kigoco.png" alt="Kigoco" />
         <svg class="play-icon" viewBox="0 0 64 64" fill="#cda7f2" xmlns="http://www.w3.org/2000/svg">
           <circle cx="32" cy="32" r="30" fill="rgba(0,0,0,0.4)" />
           <polygon points="26,20 46,32 26,44" />
@@ -368,12 +363,11 @@
       </div>
 
       <div class="gallery-item" data-category="praise" data-type="image" data-src="praise/praise3.jpg"
-        data-caption="Sunset Fun">
-        <img src="praise/praise3.jpg" alt="Beats" />
+        data-caption="Praise">
+        <img src="praise/praise3.jpg" alt="Praise" />
         <div class="caption"></div>
       </div>
 
-      <!-- Video -->
       <div class="gallery-item" data-category="praise" data-type="video" data-src="praise/preaching.mp4"
         data-caption="Preaching">
         <img src="praise/preaching.png" alt="Preaching" />
@@ -388,31 +382,31 @@
 
       <!-- Individuals -->
       <div class="gallery-item" data-category="individuals" data-type="image"
-        data-src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80"
-        data-caption="Forest Individual">
+        data-src="individuals/individual.jpg"
+        data-caption="">
         <img src="individuals/individual.jpg"
           alt="Individual" />
         <div class="caption"></div>
       </div>
       <div class="gallery-item" data-category="individuals" data-type="image"
-        data-src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80"
+        data-src="individuals/individual2.jpg"
         data-caption="Snowy Peak Individual">
         <img src="individuals/individual2.jpg"
-          alt="Snowy Peak Individual" />
+          alt="individual2" />
         <div class="caption"></div>
       </div>
     
       <div class="gallery-item" data-category="individuals" data-type="image"
     data-src="individuals/individual3.jpg"
     data-caption="Individual3">
-    <img src="individuals/individual3.jpg" alt="Forest Individual" />
+    <img src="individuals/individual33.jpg" alt="Forest Individual" />
     <div class="caption"></div>
   </div>
 
   <div class="gallery-item" data-category="individuals" data-type="image"
     data-src="individuals/individual4.jpg"
     data-caption="Individual4">
-    <img src="individuals/individual4.jpg" alt="Snowy Peak Individual" />
+    <img src="individuals/individual44.jpg" alt="Individual4" />
     <div class="caption"></div>
   </div>
 </div> <!-- END .gallery -->

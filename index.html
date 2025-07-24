@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,7 +31,7 @@
       top: 0;
       left: 0;
       z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
 
     .logo {
@@ -66,7 +67,7 @@
       width: 25px;
       height: 20px;
       justify-content: center;
-      z-index: 1100; /* above nav links */
+      z-index: 1100;
     }
 
     .hamburger div {
@@ -76,24 +77,34 @@
       transition: 0.3s;
     }
 
-    /* Banner */
+    /* Banner with background images */
     .banner {
-      background-image: url('img/banner.jpg');
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      min-height: 400px;
       background-size: cover;
       background-repeat: no-repeat;
-      background-position: center;
-      height: 100vh;
-      position: relative;
+      background-position: center center;
+
+      transition: background-image 1s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 5%;
+      box-sizing: border-box;
+      color: white;
+      z-index: 0;
     }
 
     .banner-text {
-      position: absolute;
-      top: 20%;
-      right: 5%;
-      color: white;
-      text-align: right;
+      position: relative;
       font-size: 2rem;
       font-weight: bold;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      max-width: 400px;
+      text-align: right;
+      z-index: 2;
     }
 
     /* Main content */
@@ -133,7 +144,7 @@
     .card {
       background-color: #fff;
       border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       padding: 20px;
       text-align: center;
     }
@@ -165,7 +176,6 @@
       padding: 30px 20px;
       font-size: 0.9em;
       color: #777;
-      font-family: 'Lato', sans-serif;
     }
 
     /* Responsive */
@@ -195,20 +205,29 @@
       .hamburger {
         display: flex;
       }
+
+      .banner-text {
+        font-size: 1.5rem;
+        max-width: 280px;
+        padding-right: 2%;
+      }
     }
 
     @media (max-width: 600px) {
-      .banner-text {
-        font-size: 1.5rem;
-        right: 10%;
+      .banner {
+        height: 40vh;
+        background-position: center top;
+        padding-right: 3%;
       }
 
-      nav ul {
-        gap: 20px;
+      .banner-text {
+        font-size: 1.3rem;
+        max-width: 240px;
       }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Navigation -->
@@ -227,18 +246,18 @@
     </div>
   </nav>
 
-  <!-- Banner -->
-  <section class="banner">
+  <!-- Banner Slideshow -->
+  <section class="banner" id="banner">
     <div class="banner-text">
-      <h1>Ladies Retreat 2025</h1>
+      <h1></h1>
     </div>
   </section>
 
   <main>
-
     <!-- Overview -->
-    <section id="overview" style="background-color: #ffe8e8; padding: 30px 20px; border-radius: 12px; max-width: 720px; margin: 40px auto;">
-      <h2 style="color: #57268c; font-family: 'Playfair Display', serif; text-align: center; margin-bottom: 20px;">Theme: Choose to Forgive</h2>
+    <section id="overview"
+      style="background-color: #ffe8e8; padding: 30px 20px; border-radius: 12px; max-width: 720px; margin: 40px auto;">
+      <h2>Theme: Choose to Forgive</h2>
       <p style="text-align:center; max-width: 700px; margin: auto; font-size: 1.2rem;  line-height: 1.5;">
         <strong><em>Matthew 6:14</em></strong><br />
         "For if you forgive other people when they sin against you, your heavenly Father will also forgive you."
@@ -265,22 +284,12 @@
           <p><em>Guest Speaker</em></p>
         </div>
         <div class="card">
-          <img src="img/MaryH.jpg" alt="Speaker four" />
+          <img src="img/MaryH.jpg" alt="Speaker Four" />
           <h3>Dr. Mary Hutchins</h3>
           <p><em>Guest Speaker</em></p>
         </div>
       </div>
     </section>
-
-    <!-- Contact >
-    <section id="contact">
-      <h2>Contact</h2>
-      <p style="text-align:center; max-width: 600px; margin: auto;">
-        For questions or more info, please contact the Women's Ministry at 
-        <a href="mailto:womensministry@example.com">womensministry@example.com</a>.
-      </p>
-    </section-->
-
   </main>
 
   <footer>
@@ -288,6 +297,7 @@
   </footer>
 
   <script>
+    // Hamburger toggle
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('nav-links');
 
@@ -303,6 +313,25 @@
         hamburger.click();
       }
     });
+
+    // Banner background slideshow
+    const banner = document.getElementById('banner');
+    const backgrounds = [
+      'img/banner.jpg',
+      'groups/group1.jpg',
+      'img/banner2.jpg'
+    ];
+    let current = 0;
+
+    function changeBackground() {
+      current = (current + 1) % backgrounds.length;
+      banner.style.backgroundImage = `url('${backgrounds[current]}')`;
+    }
+
+    // Initialize banner background on page load
+    banner.style.backgroundImage = `url('${backgrounds[current]}')`;
+    setInterval(changeBackground, 5000);
   </script>
 </body>
+
 </html>
