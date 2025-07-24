@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ladies Retreat 2025 - Speakers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Lato&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #6d4c41;
+      --accent-color: #d7ccc8;
+      --text-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: #fff8f4;
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 4px;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background-color: var(--primary-color);
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        padding: 1rem;
+        border-radius: 8px;
+      }
+
+      nav ul.show {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    .theme {
+      background-color: var(--accent-color);
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .select-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem 1rem;
+      flex-wrap: wrap;
+    }
+
+    select {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+      font-size: 1rem;
+    }
+
+    .speaker-info {
+      text-align: center;
+      margin: 2rem auto;
+      max-width: 600px;
+      background: #f5f5f5;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: none;
+    }
+
+    .speaker-info.active {
+      display: block;
+    }
+
+    audio {
+      margin: 1rem 0;
+    }
+
+    .quote {
+      font-style: italic;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="img/logo.png" alt="Retreat Logo" />
+    <span>Ladies Retreat 2025</span>
+  </div>
+  <nav>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <ul id="nav-list">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="message.html">Messages</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="theme">Choose to forgive</div>
+
+<div class="select-group">
+  <select id="day-select" onchange="updateTimes()">
+    <option value="">Select Day</option>
+    <option value="Friday">Friday</option>
+    <option value="Saturday">Saturday</option>
+    <option value="Sunday">Sunday</option>
+  </select>
+
+  <select id="time-select" onchange="updateSpeakers()">
+    <option value="">Select Time</option>
+  </select>
+
+  <select id="speaker-select" onchange="showSpeaker()">
+    <option value="">Select Speaker</option>
+  </select>
+</div>
+
+<!-- Speaker Sections -->
+<div id="Eunice Mungai" class="speaker-info">
+  <h2>Mrs. Eunice Mungai</h2>
+  <audio controls src="audio/Fri0718.mp3"></audio>
+  <!--p class="quote">"Let go and be free."</p-->
+</div>
+
+<div id="Dr. Monica Kangethe" class="speaker-info">
+  <h2>Dr. Monica Kangethe</h2>
+  <audio controls src="audio/SatM0719.mp3"></audio>
+  <!--p class="quote">"Forgiveness is strength."</p-->
+</div>
+
+<div id="Monica Zhou" class="speaker-info">
+  <h2>Mrs. Monica Zhou</h2>
+  <audio controls src="audio/SatMB0719.mp3"></audio>
+  <!--p class="quote">"Healing starts with grace."</p-->
+</div>
+
+<div id="Dr. Monica Kangethe" class="speaker-info">
+  <h2>Dr. Monica Kangethe</h2>
+  <audio controls src="audio/SatE0719.mp3"></audio>
+  <!--p class="quote">"Healing starts with grace."</p-->
+</div>
+
+<div id="Dr. Mary Hutchins" class="speaker-info">
+  <h2>Dr. Mary Hutchins</h2>
+  <audio controls src="audio/SatEB0719.mp3"></audio>
+  <!--p class="quote">"Healing starts with grace."</p-->
+</div>
+
+<div id="Eunice Mungai" class="speaker-info">
+  <h2>Mrs. Eunice Mungai</h2>
+  <audio controls src="audio/Sun0720.mp3"></audio>
+  <!--p class="quote">"Healing starts with grace."</p-->
+</div>
+
+<script>
+  const schedule = {
+  "Friday": {
+    "Evening": ["Eunice Mungai"]
+  },
+  "Saturday": {
+    "Morning": ["Dr. Monica Kangethe", "Monica Zhou"],
+    "Evening": ["Dr. Monica Kangethe", "Dr. Mary Hutchins"]
+  },
+  "Sunday": {
+    "Morning": ["Eunice Mungai"]
+  }
+};
+
+
+  function updateTimes() {
+  const day = document.getElementById("day-select").value;
+  const timeSelect = document.getElementById("time-select");
+  const speakerSelect = document.getElementById("speaker-select");
+
+  timeSelect.innerHTML = '<option value="">Select Time</option>';
+  speakerSelect.innerHTML = '<option value="">Select Speaker</option>';
+  hideAllSpeakers();
+
+  if (schedule[day]) {
+    Object.keys(schedule[day]).forEach(timeOfDay => {
+      const opt = document.createElement("option");
+      opt.value = timeOfDay;
+      opt.textContent = timeOfDay;
+      timeSelect.appendChild(opt);
+    });
+  }
+}
+
+function updateSpeakers() {
+  const day = document.getElementById("day-select").value;
+  const timeOfDay = document.getElementById("time-select").value;
+  const speakerSelect = document.getElementById("speaker-select");
+
+  speakerSelect.innerHTML = '<option value="">Select Speaker</option>';
+  hideAllSpeakers();
+
+  if (schedule[day] && schedule[day][timeOfDay]) {
+    schedule[day][timeOfDay].forEach(speaker => {
+      const opt = document.createElement("option");
+      opt.value = speaker;
+      opt.textContent = speaker;
+      speakerSelect.appendChild(opt);
+    });
+  }
+}
+
+function showSpeaker() {
+  const selected = document.getElementById("speaker-select").value;
+  hideAllSpeakers();
+  if (selected) {
+    const el = document.getElementById(selected);
+    if (el) el.classList.add("active");
+  }
+}
+
+function hideAllSpeakers() {
+  document.querySelectorAll('.speaker-info').forEach(el => el.classList.remove("active"));
+}
+
+function toggleMenu() {
+  document.getElementById("nav-list").classList.toggle("show");
+}
+
+</script>
+
+</body>
+</html>

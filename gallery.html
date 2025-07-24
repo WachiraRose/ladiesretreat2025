@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fancy Categorized Gallery</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #2e1a47;
+      /* deep purple background */
+      color: #e6d9f7;
+      /* light lavender text */
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    nav {
+      background: #3f2a6f;
+      /* medium purple */
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+      position: sticky;
+      top: 0;
+      z-index: 10000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #cda7f2;
+      /* pastel lilac */
+      letter-spacing: 2px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+      filter: hue-rotate(250deg) saturate(150%);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      color: #e6d9f7;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #cda7f2;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 25px;
+      height: 20px;
+      justify-content: space-between;
+    }
+
+    .hamburger div {
+      height: 3px;
+      background: #cda7f2;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* Gallery container */
+    .container {
+      max-width: 1100px;
+      margin: 40px auto 60px;
+      padding: 0 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #cda7f2;
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+      font-weight: 600;
+    }
+
+    /* Category Tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .tabs button {
+      background: transparent;
+      border: 2px solid #cda7f2;
+      color: #cda7f2;
+      padding: 10px 25px;
+      font-weight: 600;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tabs button:hover,
+    .tabs button.active {
+      background: #cda7f2;
+      color: #2e1a47;
+    }
+
+    /* Gallery grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease;
+      background: #3f2a6f;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 30px rgba(205, 167, 242, 0.8);
+    }
+
+    .gallery-item img,
+    .gallery-item video {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      border-radius: 15px;
+    }
+
+    .caption {
+      position: absolute;
+      bottom: 0;
+      background: linear-gradient(transparent, rgba(46, 26, 71, 0.8));
+      width: 100%;
+      padding: 10px 15px;
+      color: #cda7f2;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Play icon overlay for videos */
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      width: 60px;
+      height: 60px;
+      opacity: 0.85;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .play-icon {
+      opacity: 1;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(46, 26, 71, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    .lightbox.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .lightbox img,
+    .lightbox video {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 15px;
+      box-shadow: 0 0 40px #cda7f2;
+    }
+
+    .lightbox video {
+      outline: none;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 25px;
+      right: 30px;
+      font-size: 2.5rem;
+      color: #cda7f2;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+
+    .lightbox-close:hover {
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        background: #3f2a6f;
+        flex-direction: column;
+        width: 200px;
+        height: calc(100vh - 60px);
+        padding-top: 20px;
+        gap: 15px;
+        box-shadow: -2px 0 8px rgba(0, 0, 0, 0.6);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .nav-links.open {
+        transform: translateX(0);
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 400px) {
+
+      .gallery-item img,
+      .gallery-item video {
+        height: 140px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="logo">
+      <!-- Replace with your logo image if you want -->
+      <img src="img/logo.png" alt="Logo" />
+      Ladies Retreat 2025
+    </div>
+
+    <div class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="message.html">Message</a>
+      <a href="gallery.html" class="active">Gallery</a>
+    </div>
+
+    <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Fancy Categorized Gallery</h1>
+
+    <div class="tabs" id="tabs" role="tablist" aria-label="Gallery Categories">
+      <button class="active" data-filter="all" role="tab" aria-selected="true" tabindex="0">All</button>
+      <button data-filter="fun" role="tab" tabindex="-1">Fun</button>
+      <button data-filter="praise" role="tab" tabindex="-1">Praise</button>
+      <button data-filter="individuals" role="tab" tabindex="-1">Individuals</button>
+    </div>
+
+    <div class="gallery" id="gallery">
+
+      <!-- Fun -->
+      <div class="gallery-item" data-category="fun" data-type="video" data-src="video/intro.mp4"
+        data-caption="preaching">
+        <img src="fun/walk2.jpg" alt="walk2" />
+        <svg class="play-icon" viewBox="0 0 64 64" fill="#cda7f2" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" fill="rgba(0,0,0,0.4)" />
+          <polygon points="26,20 46,32 26,44" />
+        </svg>
+        <div class="caption">Nature walk</div>
+      </div>
+
+
+      <div class="gallery-item" data-category="fun" data-type="image" data-src="img/sunset.jpg"
+        data-caption="Sunset Fun">
+        <img src="fun/walk3.jpg" alt="walk" />
+        <div class="caption">group photo</div>
+      </div>
+
+
+      <div class="gallery-item" data-category="fun" data-type="video" data-src="fun/exercise.mp4"
+        data-caption="Exercise Video">
+        <img src="fun/exercise1.png" alt="Exercise Video" />
+        <svg class="play-icon" viewBox="0 0 64 64" fill="#cda7f2" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" fill="rgba(0,0,0,0.4)" />
+          <polygon points="26,20 46,32 26,44" />
+        </svg>
+        <div class="caption">Fun at its peak</div>
+      </div>
+
+      <div class="gallery-item" data-category="fun" data-type="video" data-src="fun/exercise2.mp4"
+        data-caption="Flower Fun Video">
+        <img src="fun/exercise2.png" alt="Flower Fun Video" />
+        <svg class="play-icon" viewBox="0 0 64 64" fill="#cda7f2" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" fill="rgba(0,0,0,0.4)" />
+          <polygon points="26,20 46,32 26,44" />
+        </svg>
+        <div class="caption">Free Cardio</div>
+      </div>
+
+
+      <!-- Praise -->
+      <div class="gallery-item" data-category="praise" data-type="image"
+        data-src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
+        data-caption="City Praise">
+        <img src="praise/praise1.jpg" alt="City Praise" />
+        <div class="caption">Praise</div>
+      </div>
+      <div class="gallery-item" data-category="praise" data-type="video" data-src="praise/praisevid.mp4"
+        data-caption="Kigoco">
+        <img src="https://i.ytimg.com/vi/4pHMkhj9L20/maxresdefault.jpg" alt="Kigoco" />
+        <svg class="play-icon" viewBox="0 0 64 64" fill="#cda7f2" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" fill="rgba(0,0,0,0.4)" />
+          <polygon points="26,20 46,32 26,44" />
+        </svg>
+        <div class="caption">Kigoco</div>
+      </div>
+
+      <div class="gallery-item" data-category="praise" data-type="image" data-src="praise/praise3.jpg"
+        data-caption="Sunset Fun">
+        <img src="praise/praise3.jpg" alt="Beats" />
+        <div class="caption"></div>
+      </div>
+
+      <!-- Video -->
+      <div class="gallery-item" data-category="praise" data-type="video" data-src="praise/preaching.mp4"
+        data-caption="Preaching">
+        <img src="praise/preaching.png" alt="Preaching" />
+        <svg class="play-icon" viewBox="0 0 64 64" fill="#cda7f2" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" fill="rgba(0,0,0,0.4)" />
+          <polygon points="26,20 46,32 26,44" />
+        </svg>
+        <div class="caption">Preaching</div>
+      </div>
+
+     
+
+      <!-- Individuals -->
+      <div class="gallery-item" data-category="individuals" data-type="image"
+        data-src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80"
+        data-caption="Forest Individual">
+        <img src="individuals/individual.jpg"
+          alt="Individual" />
+        <div class="caption"></div>
+      </div>
+      <div class="gallery-item" data-category="individuals" data-type="image"
+        data-src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80"
+        data-caption="Snowy Peak Individual">
+        <img src="individuals/individual2.jpg"
+          alt="Snowy Peak Individual" />
+        <div class="caption"></div>
+      </div>
+    
+      <div class="gallery-item" data-category="individuals" data-type="image"
+    data-src="individuals/individual3.jpg"
+    data-caption="Individual3">
+    <img src="individuals/individual3.jpg" alt="Forest Individual" />
+    <div class="caption">Individual3</div>
+  </div>
+
+  <div class="gallery-item" data-category="individuals" data-type="image"
+    data-src="individuals/individual4.jpg"
+    data-caption="Individual4">
+    <img src="individuals/individual4.jpg" alt="Snowy Peak Individual" />
+    <div class="caption">Individual4</div>
+  </div>
+</div> <!-- END .gallery -->
+
+    
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" tabindex="-1">
+    <span class="lightbox-close" id="lightbox-close" role="button" aria-label="Close lightbox">&times;</span>
+    <div id="lightbox-content"></div>
+  </div>
+
+  <script>
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    // Filter logic for tabs only
+    const gallery = document.getElementById('gallery');
+    const tabs = document.getElementById('tabs').querySelectorAll('button');
+
+    function filterGallery(category) {
+      const items = gallery.querySelectorAll('.gallery-item');
+      items.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // Remove active from all tabs and add to selected
+    function setActive(elements, activeElement) {
+      elements.forEach(el => el.classList.remove('active'));
+      activeElement.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const filter = tab.dataset.filter;
+        filterGallery(filter);
+        setActive(tabs, tab);
+      });
+    });
+
+    // Lightbox functionality
+    const lightbox = document.getElementById('lightbox');
+    const lightboxContent = document.getElementById('lightbox-content');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const galleryItems = gallery.querySelectorAll('.gallery-item');
+
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const type = item.dataset.type;
+        const src = item.dataset.src;
+        const caption = item.dataset.caption;
+
+        // Clear previous content
+        lightboxContent.innerHTML = '';
+
+        if (type === 'image') {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = caption;
+          lightboxContent.appendChild(img);
+        } else if (type === 'video') {
+          const video = document.createElement('video');
+          video.src = src;
+          video.controls = true;
+          video.autoplay = true;
+          video.playsInline = true;
+          video.style.maxWidth = '100%';
+          lightboxContent.appendChild(video);
+        }
+
+        lightbox.classList.add('active');
+        lightbox.focus();
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      // Pause video if playing
+      const video = lightboxContent.querySelector('video');
+      if (video) video.pause();
+      lightboxContent.innerHTML = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    window.addEventListener('keydown', e => {
+      if (e.key === "Escape" && lightbox.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  </script>
+
+</body>
+
+</html>
